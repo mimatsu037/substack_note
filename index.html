@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>noteのネタが尽きないSubstack活用ガイド【コピペOKプロンプト付き】 - みな</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', 'Noto Sans JP', sans-serif;
+            background-color: #fcf9f2;
+            color: #333333;
+        }
+        .highlight-marker {
+            background: linear-gradient(transparent 60%, #ffcda5 0%);
+            padding-bottom: 2px;
+        }
+        @keyframes popup {
+            0% { opacity: 0; transform: translate(-50%, 10px); }
+            20% { opacity: 1; transform: translate(-50%, 0); }
+            80% { opacity: 1; transform: translate(-50%, 0); }
+            100% { opacity: 0; transform: translate(-50%, -10px); }
+        }
+        .copy-toast { display: none; animation: popup 2s ease-in-out; }
+        .step-number {
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 99%, #fecfef 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        @keyframes bounce-slow {
+            0%, 100% { transform: translateY(-3%); animation-timing-function: cubic-bezier(0.8, 0, 1, 1); }
+            50% { transform: translateY(0); animation-timing-function: cubic-bezier(0, 0, 0.2, 1); }
+        }
+        .animate-bounce-slow { animation: bounce-slow 2.5s infinite; }
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+        .animate-float { animation: float 4s ease-in-out infinite; }
+        @keyframes shimmer { 100% { transform: translateX(100%); } }
+    </style>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#ff8a75',
+                        secondary: '#5cbe96',
+                        accent: '#ffb347',
+                        bgLight: '#fffcf7',
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="antialiased selection:bg-primary selection:text-white">
+
+    <div id="copyToast" class="copy-toast fixed top-5 left-1/2 -translate-x-1/2 bg-gray-800 text-white px-6 py-3 rounded-full shadow-lg z-50 items-center text-sm font-semibold">
+        <svg class="w-5 h-5 mr-2 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+        プロンプトをコピーしました！
+    </div>
+
+    <div class="max-w-2xl mx-auto bg-white shadow-xl overflow-hidden min-h-screen">
+
+        <header class="relative bg-gradient-to-br from-red-50 to-orange-50 pt-10 pb-16 px-6 text-center rounded-b-[2rem] overflow-hidden">
+            <div class="absolute top-4 right-5 text-3xl animate-float">📚</div>
+            <div class="inline-block bg-primary text-white font-bold px-4 py-1 rounded-full text-sm mb-4 shadow-sm">
+                2026年最新ノウハウ公開！
+            </div>
+
+            <p class="text-gray-600 font-semibold mb-2 text-sm sm:text-base">
+                英語が読めなくても大丈夫、AIにおまかせでOK
+            </p>
+
+            <h1 class="text-3xl sm:text-4xl font-extrabold leading-tight mb-4 text-gray-800">
+                <span class="block text-primary mb-1">noteのネタが尽きない</span>
+                <span class="block text-primary mb-1">Substack活用ガイド</span>
+                <span class="block text-lg sm:text-xl mt-2 text-gray-600 font-bold">＋コピペで使えるプロンプト</span>
+            </h1>
+
+            <p class="text-sm text-gray-700 font-medium mb-8 bg-white/80 py-2 px-4 rounded-xl inline-block shadow-sm">
+                ＼ メアドだけで登録0円、<br class="sm:hidden">海外のネタを日本語に翻訳するだけ ／
+            </p>
+
+            <a href="https://www.instagram.com/mina_ai_fukugyo/" rel="noopener noreferrer" target="_blank" class="flex items-center justify-center bg-white p-3 rounded-2xl shadow-sm border border-orange-100 hover:shadow-md transition-shadow max-w-sm mx-auto group">
+                <img alt="みな" src="assets/profile.png" class="w-14 h-14 rounded-full mr-4 border-2 border-primary/20 object-cover">
+                <div class="text-left">
+                    <p class="text-xs text-gray-500 mb-0.5">AI×SNSで在宅収入を叶える主婦</p>
+                    <p class="font-bold text-gray-800 text-sm group-hover:text-primary transition-colors">
+                        みな
+                        <span class="text-gray-400 font-normal text-xs ml-1">@mina_ai_fukugyo</span>
+                    </p>
+                </div>
+                <svg class="w-5 h-5 ml-auto text-gray-300 group-hover:text-primary transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+            </a>
+        </header>
+
+        <section class="py-12 px-6">
+            <div class="bg-blue-50/50 rounded-3xl p-6 border border-blue-100 relative">
+                <div class="absolute -top-4 -left-2 text-4xl animate-float">🛀🫧</div>
+
+                <h3 class="text-xl font-bold text-center text-gray-800 mb-6 pt-2">
+                    こんなお悩みありませんか？
+                </h3>
+
+                <ul class="space-y-4 mb-6">
+                    <li class="flex items-start bg-white p-4 rounded-2xl shadow-sm border border-gray-50">
+                        <span class="text-2xl mr-3 shrink-0">😩</span>
+                        <span class="text-gray-700 text-sm sm:text-base leading-relaxed">noteに<strong>何を書けばいいか</strong>わからず、<br>気づけば手が止まっている</span>
+                    </li>
+                    <li class="flex items-start bg-white p-4 rounded-2xl shadow-sm border border-gray-50">
+                        <span class="text-2xl mr-3 shrink-0">😩</span>
+                        <span class="text-gray-700 text-sm sm:text-base leading-relaxed">見渡す限り<strong>みんな同じような内容</strong>ばかりで、<br>差別化できない</span>
+                    </li>
+                    <li class="flex items-start bg-white p-4 rounded-2xl shadow-sm border border-gray-50">
+                        <span class="text-2xl mr-3 shrink-0">😩</span>
+                        <span class="text-gray-700 text-sm sm:text-base leading-relaxed">毎回<strong>ネタ探しに時間がかかって</strong>、<br>更新のペースが落ちてしまう</span>
+                    </li>
+                </ul>
+
+                <p class="text-gray-600 text-sm mb-6 leading-relaxed">
+                    「今日も何も投稿できなかった」<br>
+                    そんな1日を繰り返すうちに、<br><span class="font-bold text-gray-800">更新すること自体が怖くなってしまう</span>…<br>
+                    実はこれ、一番もったいない状態なんです。
+                </p>
+
+                <div class="bg-white border-2 border-primary/20 rounded-2xl p-5 text-center relative overflow-hidden">
+                    <div class="absolute -right-4 -bottom-4 text-6xl opacity-10">📚</div>
+                    <p class="font-bold text-gray-800 mb-2 relative z-10">
+                        そのお悩み<br>
+                        <span class="text-primary text-xl inline-block mt-1">「海外Substack活用術」</span><br>で解決できます！✊
+                    </p>
+                    <p class="text-sm text-gray-600 relative z-10">
+                        英語が読めなくても平気。<br>
+                        AIが翻訳から日本向けアレンジまで<br>
+                        全部やってくれるので、<br>
+                        <strong class="text-primary">寝かしつけ後の20分</strong>で<br>
+                        今日のネタが1本できあがります。
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-12 px-6 bg-gradient-to-b from-transparent to-green-50/30 relative overflow-hidden">
+            <div class="absolute top-2 right-4 text-3xl animate-float">🌏</div>
+            <div class="text-center mb-8">
+                <span class="inline-block bg-accent/10 text-accent font-bold px-3 py-1 rounded-full text-sm mb-2 animate-pulse">今がチャンス！</span>
+                <h3 class="text-2xl font-bold text-gray-800">
+                    📚 海外Substack、<br>
+                    実はネタの宝庫なんです
+                </h3>
+            </div>
+
+            <p class="text-center text-gray-700 mb-8 leading-relaxed">
+                海外版noteとも言われる<strong class="highlight-marker">Substack</strong>には、<br class="sm:hidden">
+                フォロワー数万人超のライターが<br>
+                質の高い記事を、<strong>無料</strong>で<br>
+                毎日のように公開しています。
+            </p>
+
+            <div class="bg-white shadow-md rounded-2xl p-6 border border-gray-100 mb-6">
+                <p class="font-bold text-gray-800 mb-4 text-center border-b pb-2">🌏 Substackってこんな場所</p>
+                <ul class="space-y-4">
+                    <li class="flex items-center p-3 bg-gray-50 rounded-xl">
+                        <span class="text-4xl mr-4 shrink-0">💰</span>
+                        <div>
+                            <span class="block font-bold text-gray-800">登録費用</span>
+                            <span class="text-primary font-bold text-lg">メアドだけで0円</span>
+                        </div>
+                    </li>
+                    <li class="flex items-center p-3 bg-gray-50 rounded-xl">
+                        <span class="text-4xl mr-4 shrink-0">📖</span>
+                        <div>
+                            <span class="block font-bold text-gray-800">読めるコンテンツ</span>
+                            <span class="text-primary font-bold text-lg">質の高い記事が読み放題</span>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="text-center bg-accent/10 p-4 rounded-xl border border-accent/20">
+                <p class="text-sm text-gray-700 font-medium">
+                    海外のトレンドが日本に来るまでには<strong class="font-bold">半年〜1年のタイムラグ</strong>があると言われています。<br>
+                    つまり今のうちに知っておくだけで<span class="font-bold text-red-500">「まだ日本にない情報」</span>を書けるということ。<br>
+                    競合が増える前に動くのが一番賢い選択です。
+                </p>
+            </div>
+        </section>
+
+        <section class="py-12 px-6 bg-white border-t border-gray-100">
+            <h3 class="text-center text-lg font-bold text-gray-800 mb-8">
+                たった3ステップで<br>
+                今日のネタが完成🎉
+            </h3>
+            <div class="relative max-w-xs mx-auto mb-4">
+                <div class="absolute left-6 top-6 bottom-6 border-l-2 border-dashed border-primary/30"></div>
+                <div class="space-y-6 relative">
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 shrink-0 rounded-full bg-primary/10 flex items-center justify-center text-2xl border-2 border-primary/30 relative z-10 bg-white">📝</div>
+                        <span class="font-bold text-gray-700 text-sm">Substackに登録</span>
+                    </div>
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 shrink-0 rounded-full bg-primary/10 flex items-center justify-center text-2xl border-2 border-primary/30 relative z-10 bg-white">🔍</div>
+                        <span class="font-bold text-gray-700 text-sm">伸びてるアカウントを探す</span>
+                    </div>
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 shrink-0 rounded-full bg-primary/10 flex items-center justify-center text-2xl border-2 border-primary/30 relative z-10 bg-white">🌐</div>
+                        <span class="font-bold text-gray-700 text-sm">記事を日本語note化</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex items-center justify-center mb-6 mt-10">
+                <div class="text-center">
+                    <span class="step-number text-4xl font-black block mb-1">STEP 1</span>
+                    <h2 class="text-2xl font-bold text-gray-800 flex items-center justify-center">
+                        <span class="text-3xl mr-2">📝</span> Substackに<br>登録する
+                    </h2>
+                </div>
+            </div>
+
+            <p class="text-gray-600 text-center mb-6 text-sm">
+                サイトにアクセスして、<br>メールアドレスを入力するだけ。<br>5分もあれば終わります。
+            </p>
+
+            <div class="text-center mb-6">
+                <a href="https://substack.com" rel="noopener noreferrer" target="_blank" class="inline-flex items-center bg-gray-800 hover:bg-gray-700 text-white text-sm font-bold px-6 py-3 rounded-full shadow-md transition-colors">
+                    Substackを開く
+                    <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+                </a>
+            </div>
+
+            <div class="mt-4 flex bg-yellow-50 p-4 rounded-xl border border-yellow-100 items-start">
+                <span class="text-2xl mr-3">🌻</span>
+                <p class="text-sm text-gray-700 leading-relaxed">
+                    <strong>アドバイス：</strong><br>最初は「読む専用」でOK。書こうとしなくていいので、まずは気軽に登録してみてください。
+                </p>
+            </div>
+        </section>
+
+        <section class="py-12 px-6 bg-gray-50 border-t border-gray-100">
+            <div class="flex items-center justify-center mb-6">
+                <div class="text-center">
+                    <span class="step-number text-4xl font-black block mb-1">STEP 2</span>
+                    <h2 class="text-2xl font-bold text-gray-800 flex items-center justify-center">
+                        <span class="text-3xl mr-2">🔍</span> 伸びてる<br>アカウントを見つける
+                    </h2>
+                </div>
+            </div>
+
+            <p class="text-gray-600 text-center mb-6 text-sm">
+                検索欄に興味のあるテーマを<br>英語で入力するだけ。<br>
+                「なんとなく読まれてそう」と感じたら<br>とりあえずフォローでOKです✨
+            </p>
+
+            <div class="bg-white rounded-2xl p-5 border border-gray-100 shadow-sm max-w-sm mx-auto mb-6">
+                <p class="font-bold text-gray-800 text-sm mb-3 text-center">🔎 検索テーマ例</p>
+                <div class="flex flex-wrap gap-2 justify-center">
+                    <span class="bg-gray-50 text-gray-700 text-xs font-medium px-3 py-1.5 rounded-full border border-gray-200">AI writing</span>
+                    <span class="bg-gray-50 text-gray-700 text-xs font-medium px-3 py-1.5 rounded-full border border-gray-200">copywriting</span>
+                    <span class="bg-gray-50 text-gray-700 text-xs font-medium px-3 py-1.5 rounded-full border border-gray-200">content marketing</span>
+                    <span class="bg-gray-50 text-gray-700 text-xs font-medium px-3 py-1.5 rounded-full border border-gray-200">newsletter growth</span>
+                    <span class="bg-gray-50 text-gray-700 text-xs font-medium px-3 py-1.5 rounded-full border border-gray-200">side income</span>
+                    <span class="bg-gray-50 text-gray-700 text-xs font-medium px-3 py-1.5 rounded-full border border-gray-200">solopreneur</span>
+                </div>
+            </div>
+
+            <div class="mt-4 text-center bg-white p-4 rounded-xl border border-gray-100 shadow-sm">
+                <p class="text-sm text-gray-700 font-medium">
+                    まずは気になるテーマで<strong class="text-primary">5つ</strong>くらい<br>
+                    フォローするところから始めてみてください🔖
+                </p>
+            </div>
+        </section>
+
+        <section class="py-12 px-6 bg-white border-t border-gray-100">
+            <div class="flex items-center justify-center mb-6">
+                <div class="text-center">
+                    <span class="step-number text-4xl font-black block mb-1">STEP 3</span>
+                    <h2 class="text-2xl font-bold text-gray-800 flex items-center justify-center">
+                        <span class="text-3xl mr-2">🌐</span> 記事を日本語に訳して<br>note化する
+                    </h2>
+                </div>
+            </div>
+
+            <p class="text-gray-600 text-center mb-6 text-sm">
+                伸びてる記事を見つけたら、<br>
+                全文をチャッピー（ChatGPT）にコピペして<br>
+                「日本語に翻訳して」と送るだけ。<br>
+                あとはこのプロンプトを送信すれば完成です！
+            </p>
+
+            <div class="bg-gray-800 rounded-2xl overflow-hidden shadow-lg mb-4 relative">
+                <div class="bg-gray-700 px-4 py-3 flex justify-between items-center border-b border-gray-600">
+                    <span class="text-xs font-bold text-gray-300 flex items-center"><span class="mr-1">✨</span> コピペOKプロンプト</span>
+                    <button onclick="copyPrompt('prompt1')" class="text-xs bg-primary/80 hover:bg-primary text-white px-4 py-1.5 rounded-full transition-colors flex items-center shadow-sm">
+                        <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
+                        コピーする
+                    </button>
+                </div>
+                <div class="p-5 overflow-x-auto text-sm text-gray-200 font-mono leading-relaxed whitespace-pre-wrap" id="prompt1">あなたは「noteで月5万円の成果を出すプロのコンテンツディレクター」です。
+
+以下の文章は海外記事を翻訳したものです。
+日本の読者向けに「思わず手にとりたくなるnote記事」へと再設計してください。
+
+────────────────────────────
+【最終目的】
+・「この記事なら有料でも読みたい」と読者に思わせる
+・LINE登録や有料noteの購入へスムーズに誘導する構造にする
+・過去のnoteの雰囲気をしっかりと踏襲する
+────────────────────────────
+
+【ターゲット】
+・副業初心者（30〜50代）
+・AIやnoteでの発信に興味がある
+・現在の実績は「0〜1万円」程度
+
+────────────────────────────
+【優先順位（最優先）】
+1. 過去のnote記事（文体・トーン・リズムの再現）
+2. 翻訳済み文章（情報やノウハウの内容）
+
+※単なる情報伝達ではなく「この人が書いた」とわかる独自性の再現を優先してください。
+
+────────────────────────────
+【文体・トーンのルール】
+・【入力②】の過去記事がある場合は、その口調・語尾・改行・テンポを再現する
+・本人が書いたとしか思えないクオリティに仕上げる
+・過去記事がない場合は、初心者にも優しく語りかけるようなトーンにする
+
+────────────────────────────
+【リライト方針】
+・直訳や修正にとどまらず「日本の市場に合わせてイチから作り直す」
+・海外固有のサービスや事例は、日本の環境に置き換える
+（例：Substack → note / Brain / クラウドワークス など）
+
+────────────────────────────
+【記事の構成（必須）】
+① 強い共感（読者の悩みや過去の失敗に寄り添う）
+② 誤解の指摘（ありがちな間違った努力）
+③ 本質（なぜこれまで成果が出なかったのか）
+④ 解決策（やるべきことを1つに絞る）
+⑤ 具体例（日本国内の事例に置き換えて解説）
+⑥ 行動ステップ（今すぐできる3〜5ステップ）
+⑦ 限界の提示（ここから先は有料レベルの知見だと伝える）
+⑧ 未来提示（これを実践した後の理想の姿）
+
+────────────────────────────
+【冒頭（リード文）のルール】
+・最初の3行で読者の心を掴み、続きを読む理由を作る
+・ターゲットの「リアルな悩み」をダイレクトに突く
+・記事の結論（得られる価値）をチラ見せする
+
+────────────────────────────
+【有料エリア（Paywall）の設計】
+・「続きが気になって買いたくなるポイント」を意図的に作る
+・無料エリアですべてを明かさず、実践的なノウハウの手前で止める
+・期待感を残したまま有料枠へ接続する
+
+────────────────────────────
+【感情導線】
+共感 → 不安の可視化 → 納得 → 希望 → 実践への意欲
+
+────────────────────────────
+【ライティングの制約】
+・1文は短くシンプルに（20〜40文字目安）
+・改行を細かく入れて読みやすくする
+・親しみやすい会話調で語りかける
+・抽象的な表現は避け、常に具体的な言葉を使う
+・専門用語は使わない（使う場合は噛み砕いて解説する）
+
+────────────────────────────
+【フォーマット規定】
+・見出し（H2、H3）を適切に配置する
+・重要ポイントは太字で強調する
+・箇条書きを活用して視認性を高める
+・アスタリスク記号（「＊」「*」）は絶対に使用しない
+
+────────────────────────────
+【独自性・リアリティ】
+・自分の体験談として語られているように見せる
+・机上の空論ではなく「実際にやってみた」リアリティを出す
+
+────────────────────────────
+【セルフチェック（出力前に必ず確認）】
+・副業初心者が迷わず理解できる内容か？
+・最後までスラスラ読めるテンポになっているか？
+・「続きを読みたい」「有料でもほしい」と思える仕上がりか？
+
+※1つでも不十分な点があれば、修正した上で最終出力を作成してください。
+
+────────────────────────────
+【出力形式】
+・そのままnoteに貼り付けられる完成原稿
+・見出しや太字などの装飾を整えた状態
+
+────────────────────────────
+【入力】
+① 翻訳済み文章：
+（ここに貼る）
+
+② 過去のnote記事（任意）：
+（ここに貼る）</div>
+            </div>
+
+            <div class="mt-4 flex bg-yellow-50 p-4 rounded-xl border border-yellow-100 items-start">
+                <span class="text-2xl mr-3">🌻</span>
+                <p class="text-sm text-gray-700 leading-relaxed">
+                    <strong>アドバイス：</strong><br>②の「過去のnote記事」に自分の記事を貼るほど、自分らしい文体で仕上がります。日本でまだ知られてない穴場ネタが書けるので、かなり狙い目です。
+                </p>
+            </div>
+        </section>
+
+        <section class="py-12 px-6 bg-gray-50 border-t border-gray-100">
+            <h3 class="text-center text-lg font-bold text-gray-800 mb-2">
+                🌏 私が参考にしている<br>Substack10選
+            </h3>
+            <p class="text-center text-gray-600 text-sm mb-8">
+                英語ですが、気になるものがあれば<br>フォローしてみてください。
+            </p>
+
+            <div class="space-y-6 max-w-md mx-auto">
+                <div>
+                    <p class="font-bold text-primary text-sm mb-3">① AI・テクノロジートレンド</p>
+                    <ul class="space-y-3">
+                        <li class="bg-white p-4 rounded-xl shadow-sm border border-gray-100">
+                            <a href="https://www.oneusefulthing.org" rel="noopener noreferrer" target="_blank" class="font-bold text-gray-800 text-sm hover:text-primary transition-colors inline-flex items-center">
+                                One Useful Thing（Ethan Mollick）
+                                <svg class="w-3 h-3 ml-1 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+                            </a>
+                            <p class="text-xs text-gray-500 mt-1">大学教授によるAI実践活用ノウハウ。データの裏付けが豊富。</p>
+                        </li>
+                        <li class="bg-white p-4 rounded-xl shadow-sm border border-gray-100">
+                            <a href="https://aisupremacy.substack.com" rel="noopener noreferrer" target="_blank" class="font-bold text-gray-800 text-sm hover:text-primary transition-colors inline-flex items-center">
+                                AI Supremacy（Michael Spencer）
+                                <svg class="w-3 h-3 ml-1 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+                            </a>
+                            <p class="text-xs text-gray-500 mt-1">AI業界の動向を俯瞰。数ヶ月先のトレンド予測に強い。</p>
+                        </li>
+                        <li class="bg-white p-4 rounded-xl shadow-sm border border-gray-100">
+                            <a href="https://garymarcus.substack.com" rel="noopener noreferrer" target="_blank" class="font-bold text-gray-800 text-sm hover:text-primary transition-colors inline-flex items-center">
+                                Marcus on AI（Gary Marcus）
+                                <svg class="w-3 h-3 ml-1 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+                            </a>
+                            <p class="text-xs text-gray-500 mt-1">AIへの疑問や不安を扱う視点。Q&amp;A形式の記事作りの参考に。</p>
+                        </li>
+                        <li class="bg-white p-4 rounded-xl shadow-sm border border-gray-100">
+                            <a href="https://www.understandingai.org" rel="noopener noreferrer" target="_blank" class="font-bold text-gray-800 text-sm hover:text-primary transition-colors inline-flex items-center">
+                                Understanding AI（Timothy B. Lee）
+                                <svg class="w-3 h-3 ml-1 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+                            </a>
+                            <p class="text-xs text-gray-500 mt-1">複雑な技術を噛み砕いて解説するのが得意。</p>
+                        </li>
+                    </ul>
+                </div>
+
+                <div>
+                    <p class="font-bold text-primary text-sm mb-3">② マーケティング・グロース戦略</p>
+                    <ul class="space-y-3">
+                        <li class="bg-white p-4 rounded-xl shadow-sm border border-gray-100">
+                            <a href="https://www.lennysnewsletter.com" rel="noopener noreferrer" target="_blank" class="font-bold text-gray-800 text-sm hover:text-primary transition-colors inline-flex items-center">
+                                Lenny's Newsletter（Lenny Rachitsky）
+                                <svg class="w-3 h-3 ml-1 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+                            </a>
+                            <p class="text-xs text-gray-500 mt-1">事業を伸ばす具体的なフレームワークが豊富。</p>
+                        </li>
+                        <li class="bg-white p-4 rounded-xl shadow-sm border border-gray-100">
+                            <a href="https://www.growthunhinged.com" rel="noopener noreferrer" target="_blank" class="font-bold text-gray-800 text-sm hover:text-primary transition-colors inline-flex items-center">
+                                Growth Unhinged（Kyle Poyar）
+                                <svg class="w-3 h-3 ml-1 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+                            </a>
+                            <p class="text-xs text-gray-500 mt-1">価格戦略やユーザー獲得に特化した内容。</p>
+                        </li>
+                        <li class="bg-white p-4 rounded-xl shadow-sm border border-gray-100">
+                            <a href="https://first1000.substack.com" rel="noopener noreferrer" target="_blank" class="font-bold text-gray-800 text-sm hover:text-primary transition-colors inline-flex items-center">
+                                First 1000（Ali Abouelatta）
+                                <svg class="w-3 h-3 ml-1 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+                            </a>
+                            <p class="text-xs text-gray-500 mt-1">最初の1000人をどう集めたかの実例が揃う。</p>
+                        </li>
+                        <li class="bg-white p-4 rounded-xl shadow-sm border border-gray-100">
+                            <a href="https://www.notboring.co" rel="noopener noreferrer" target="_blank" class="font-bold text-gray-800 text-sm hover:text-primary transition-colors inline-flex items-center">
+                                Not Boring（Packy McCormick）
+                                <svg class="w-3 h-3 ml-1 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+                            </a>
+                            <p class="text-xs text-gray-500 mt-1">複雑な話を物語のように読ませる文章構成が参考になる。</p>
+                        </li>
+                    </ul>
+                </div>
+
+                <div>
+                    <p class="font-bold text-primary text-sm mb-3">③ ライティング・コンテンツビジネス</p>
+                    <ul class="space-y-3">
+                        <li class="bg-white p-4 rounded-xl shadow-sm border border-gray-100">
+                            <a href="https://categorypirates.substack.com" rel="noopener noreferrer" target="_blank" class="font-bold text-gray-800 text-sm hover:text-primary transition-colors inline-flex items-center">
+                                Category Pirates（Christopher Lochhead 他）
+                                <svg class="w-3 h-3 ml-1 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+                            </a>
+                            <p class="text-xs text-gray-500 mt-1">独自ポジションの作り方（カテゴリーデザイン）が学べる。</p>
+                        </li>
+                        <li class="bg-white p-4 rounded-xl shadow-sm border border-gray-100">
+                            <a href="https://simonowens.substack.com" rel="noopener noreferrer" target="_blank" class="font-bold text-gray-800 text-sm hover:text-primary transition-colors inline-flex items-center">
+                                Simon Owens's Media Newsletter（Simon Owens）
+                                <svg class="w-3 h-3 ml-1 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+                            </a>
+                            <p class="text-xs text-gray-500 mt-1">コンテンツで収益を上げる最新事例を追える。</p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="mt-6 text-center bg-white p-4 rounded-xl border border-gray-100 shadow-sm max-w-md mx-auto">
+                <p class="text-sm text-gray-700 font-medium">
+                    英語が苦手でも大丈夫。<br>
+                    タイトルとフォロワー数だけ見て<br>
+                    「なんか読まれてそう」で<strong class="text-primary">フォローでOK</strong>です🔖
+                </p>
+            </div>
+        </section>
+
+        <section class="py-16 px-6 bg-gray-800 text-white text-center">
+            <h2 class="text-2xl sm:text-3xl font-bold mb-8">
+                ⚠️ でも、正直にお伝えします。
+            </h2>
+
+            <p class="text-gray-300 text-sm sm:text-base leading-relaxed mb-8 max-w-lg mx-auto text-left">
+                ここまで読んで、「プロンプトが分かったから自分でもできそう！」と思ったかもしれません。<br><br>
+                でも実は…<br>
+                <strong class="text-white text-lg border-b-2 border-primary pb-1">「プロンプトを知っていること」と<br>「実際に継続して稼げること」は全く別物</strong><br>なんです。
+            </p>
+
+            <ul class="text-left max-w-md mx-auto space-y-4 mb-8 bg-gray-700/50 p-6 rounded-2xl border border-gray-600">
+                <li class="flex items-start">
+                    <span class="text-primary text-xl mr-3 shrink-0">🤔</span>
+                    <span class="text-gray-200 text-sm">どんなテーマ・キャラなら売れるの？</span>
+                </li>
+                <li class="flex items-start">
+                    <span class="text-primary text-xl mr-3 shrink-0">🤔</span>
+                    <span class="text-gray-200 text-sm">表紙やタイトルで選ばれるコツは？</span>
+                </li>
+                <li class="flex items-start">
+                    <span class="text-primary text-xl mr-3 shrink-0">🤔</span>
+                    <span class="text-gray-200 text-sm">1冊で終わらせず、継続して収入にするには？</span>
+                </li>
+            </ul>
+
+            <p class="text-gray-300 mb-12">
+                ここでつまずいて、諦めてしまう方がいちばん多いんです🥺
+            </p>
+
+            <div class="bg-white text-gray-800 rounded-3xl p-6 sm:p-8 text-left relative mt-16 max-w-lg mx-auto shadow-2xl">
+                <div class="absolute -top-8 left-1/2 -translate-x-1/2 bg-gray-800 text-white px-6 py-2 rounded-full font-bold border-4 border-white whitespace-nowrap shadow-md">
+                    💔 実は私も、大失敗だらけでした
+                </div>
+                <p class="text-sm sm:text-base leading-relaxed mt-4 mb-4">
+                    私自身、過去に自己流で副業に手を出し、<br>
+                    <strong class="text-red-500 text-lg highlight-marker">150万円ものお金を失う</strong><br>
+                    という痛い経験をしています。
+                </p>
+                <p class="text-sm text-gray-600 mb-6 bg-gray-50 p-3 rounded-lg">
+                    「私には才能がないんだ…」とお布団の中で一人泣いた夜は数え切れません。
+                </p>
+                <p class="text-sm sm:text-base leading-relaxed">
+                    そこから必死に試行錯誤し、ようやく見つけたのが<strong class="text-gray-800">「AIを賢く活用し、手堅くお家で収入を作るための『実践ノウハウと神テンプレート』」</strong>でした。<br><br>
+                    私と今のあなたの違いは、才能ではありません。<br>
+                    <strong class="text-primary font-bold">「成果が出る『型』を知っていて、<br>失敗を避ける方法を知っているかどうか」</strong><br>だけなんです。
+                </p>
+            </div>
+        </section>
+
+        <section class="py-16 px-6 bg-gradient-to-b from-[#fffcf7] to-[#ffe5d9]">
+            <div class="text-center mb-8">
+                <span class="inline-block bg-white text-primary border border-primary/30 font-bold px-6 py-3 rounded-3xl text-sm mb-4 shadow-sm animate-bounce-slow leading-snug">
+                    遠回りしたくないあなたへ。<br>特別なプレゼント
+                </span>
+            </div>
+
+            <p class="text-center text-gray-800 text-base sm:text-lg leading-relaxed mb-8 max-w-lg mx-auto font-bold bg-yellow-100/50 p-4 rounded-2xl border border-yellow-200">
+                私がこれまでに体験した、<br>150万円の損失からようやく掴み取った<br>
+                <span class="text-primary text-xl block mt-2">「寝かしつけ後の30分が<br>"収入を生む時間"に変わる<br>【実践マニュアル】」</span><br>
+                をこの一冊に詰め込みました。
+            </p>
+
+            <div class="bg-white rounded-3xl p-6 sm:p-8 shadow-xl border border-gray-100 max-w-lg mx-auto relative mb-12">
+                <div class="absolute -top-4 right-4 bg-red-500 text-white text-xs font-bold px-3 py-1 rounded-full shadow-md">
+                    無料プレゼント中🎁
+                </div>
+
+                <h3 class="text-2xl font-bold text-center text-gray-800 mb-6">
+                    『AIマネタイズの教科書』
+                </h3>
+
+                <div class="mb-6 flex justify-center">
+                    <img src="assets/book_cover.jpg" alt="AIマネタイズの教科書" class="w-48 h-48 rounded-xl shadow-md object-cover border border-orange-200">
+                </div>
+
+                <div class="bg-gray-50 rounded-2xl p-5 border border-gray-100">
+                    <p class="font-bold text-center text-gray-800 mb-4 text-sm border-b border-gray-200 pb-2">
+                        📖 教科書の中身を少しだけご紹介！
+                    </p>
+                    <ul class="space-y-3 text-sm text-gray-700">
+                        <li class="flex items-start"><span class="mr-2 text-lg">💎</span><span class="pt-0.5"><strong>第一章:</strong> いま一番始めやすいAIマネタイズ手法</span></li>
+                        <li class="flex items-start"><span class="mr-2 text-lg">💎</span><span class="pt-0.5"><strong>第二章:</strong> ChatGPT収益化プロンプト</span></li>
+                        <li class="flex items-start"><span class="mr-2 text-lg">💎</span><span class="pt-0.5"><strong>第三章:</strong> AIマネタイズ神テンプレート</span></li>
+                        <li class="flex items-start"><span class="mr-2 text-lg">💎</span><span class="pt-0.5"><strong>第四章:</strong> マネタイズのための生成AIツール3選</span></li>
+                        <li class="flex items-start"><span class="mr-2 text-lg">💎</span><span class="pt-0.5"><strong>第五章:</strong> AI×SNSで収益を生むリアル事例</span></li>
+                    </ul>
+                </div>
+
+                <p class="text-sm text-gray-700 mt-6 leading-relaxed bg-white/80">
+                    本書では、<br><strong>「作業効率を劇的に上げる神テンプレート（第三章）」</strong>や、<br>単発の仕事で終わらせないための<br><strong>「AI×SNSで毎月安定した収益を生むリアル事例（第五章）」</strong>など、<br>自己流では必ずつまずいてしまうポイントを網羅しています。
+                </p>
+            </div>
+
+            <div class="max-w-lg mx-auto text-center">
+                <p class="text-sm text-gray-700 mb-6 leading-relaxed">
+                    AIのトレンドは日々進化しています。<br>
+                    今のこの「初心者でも入りやすいボーナスタイム」が<br>
+                    いつまで続くかは分かりません。<br>
+                    だからこそ、<br>
+                    今すぐこのノウハウを受け取って、確実な一歩を踏み出してほしいんです。<br><br>
+                    <strong class="text-primary text-base bg-white/80 px-2 py-1 rounded inline-block shadow-sm">まとまった時間がなくても大丈夫。<br>まずは子どもが寝た後の1時間、一緒に始めてみませんか？🌷</strong>
+                </p>
+
+                <a href="https://sub.aione.co.jp/line/open/ISEBuerKAyih?mtid=dpdPEBMvLdsV" rel="noopener noreferrer" target="_blank" class="block w-full bg-[#06C755] hover:bg-[#05b34c] text-white text-center font-bold py-4 px-6 rounded-2xl shadow-xl transition-transform hover:scale-[1.02] active:scale-[0.98] mb-4 flex flex-col items-center justify-center relative overflow-hidden group animate-bounce-slow">
+                    <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full group-hover:animate-[shimmer_1.5s_infinite]"></div>
+
+                    <span class="text-xs mb-1 font-medium bg-white/20 px-3 py-0.5 rounded-full inline-block">＼ タップして ／</span>
+                    <div class="flex items-center text-lg sm:text-xl relative z-10 mt-1">
+                        <svg class="w-6 h-6 mr-2" viewBox="0 0 24 24" fill="currentColor"><path d="M23.929 10.318C23.929 4.622 18.571 0 11.96 0 5.351 0 0 4.622 0 10.318c0 5.093 4.148 9.387 9.873 10.155.39.083.91.24 1.047.55.123.277.08.625.04.86-.06.337-.384 2.29-.444 2.65-.098.583.473.81.93.593 1.134-.54 6.104-3.594 8.784-6.494 2.45-2.656 3.7-5.467 3.7-8.314z"/></svg>
+                        公式LINEで無料で受け取る
+                    </div>
+                </a>
+
+                <p class="text-[10px] sm:text-xs text-gray-500 text-left bg-white/50 p-3 rounded-lg">
+                    ※現在のAI事情に合わせた最新ノウハウのため、期間限定の無料配布となります。予告なく配布を終了する場合がありますので、お早めにお受け取りください。
+                </p>
+            </div>
+        </section>
+
+        <footer class="bg-white py-8 border-t border-gray-100 text-center">
+            <a href="https://www.instagram.com/mina_ai_fukugyo/" rel="noopener noreferrer" target="_blank" class="inline-flex items-center justify-center text-gray-600 hover:text-primary transition-colors mb-4">
+                <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+                <span class="text-sm font-medium">Instagram: @mina_ai_fukugyo</span>
+            </a>
+            <p class="text-xs text-gray-500 mb-1">みな ｜ AI×SNSで在宅収入を叶える主婦</p>
+            <p class="text-xs text-gray-400">&copy; 2026 @mina_ai_fukugyo. All Rights Reserved.</p>
+        </footer>
+
+    </div>
+
+    <script>
+        function copyPrompt(elementId) {
+            const textToCopy = document.getElementById(elementId).innerText;
+            const toast = document.getElementById('copyToast');
+
+            navigator.clipboard.writeText(textToCopy).then(() => {
+                toast.style.display = 'flex';
+                toast.style.animation = 'none';
+                toast.offsetHeight;
+                toast.style.animation = null;
+                setTimeout(() => { toast.style.display = 'none'; }, 2000);
+            }).catch(err => {
+                console.error('コピーに失敗しました', err);
+                fallbackCopyTextToClipboard(textToCopy, toast);
+            });
+        }
+
+        function fallbackCopyTextToClipboard(text, toast) {
+            const textArea = document.createElement("textarea");
+            textArea.value = text;
+            textArea.style.top = "0";
+            textArea.style.left = "0";
+            textArea.style.position = "fixed";
+            document.body.appendChild(textArea);
+            textArea.focus();
+            textArea.select();
+            try {
+                const successful = document.execCommand('copy');
+                if(successful) {
+                    toast.style.display = 'flex';
+                    setTimeout(() => { toast.style.display = 'none'; }, 2000);
+                }
+            } catch (err) {
+                console.error('Fallback: Oops, unable to copy', err);
+            }
+            document.body.removeChild(textArea);
+        }
+    </script>
+</body>
+</html>
