@@ -107,20 +107,45 @@
         padding: 2rem 1.5rem 2.5rem;
         border-top: 1px solid #f3ece0;
     }
-    footer a.back {
-        display: inline-block;
-        margin-bottom: 1rem;
-        font-size: 0.85rem;
-        font-weight: 700;
-        color: var(--primary);
-        text-decoration: none;
-        background: #fff5f0;
-        padding: 0.6rem 1.4rem;
-        border-radius: 999px;
-    }
-    footer a.back:hover { text-decoration: underline; }
     footer p { font-size: 0.7rem; color: #999; margin: 0.25rem 0 0; }
     .updated { font-size: 0.75rem; color: #999; text-align: right; margin: 0 0 1rem; }
+    .footer-nav {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 0.75rem;
+        font-size: 0.75rem;
+        color: #8a8a8a;
+        margin-bottom: 1rem;
+    }
+    .footer-nav a { color: #8a8a8a; text-decoration: none; }
+    .footer-nav a:hover { color: var(--primary); text-decoration: underline; }
+    .footer-nav .sep { color: #ddd; }
+    .footer-nav details { position: relative; display: inline-block; }
+    .footer-nav summary { cursor: pointer; list-style: none; }
+    .footer-nav summary:hover { color: var(--primary); }
+    .footer-nav summary::-webkit-details-marker { display: none; }
+    .footer-nav .popover {
+        position: absolute;
+        z-index: 20;
+        left: 50%;
+        transform: translateX(-50%);
+        margin-top: 0.75rem;
+        width: 16rem;
+        background: #ffffff;
+        border: 1px solid #f0e9db;
+        border-radius: 1rem;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+        padding: 1rem;
+        text-align: left;
+        font-size: 0.75rem;
+        color: #4a4a4a;
+        line-height: 1.7;
+    }
+    .footer-nav .popover p { margin: 0 0 0.4rem; }
+    .footer-nav .popover p:last-child { margin-bottom: 0; }
+    .footer-nav .popover strong { color: #2d2d2d; }
 </style>
 </head>
 <body>
@@ -219,7 +244,7 @@
             <table class="meta-table">
                 <tr><td>サイト名</td><td>noteのネタが尽きないSubstack活用ガイド</td></tr>
                 <tr><td>運営者</td><td>みな</td></tr>
-                <tr><td>お問い合わせ</td><td>job.matsu037@gmail.com</td></tr>
+                <tr><td>お問い合わせ</td><td><a href="mailto:job.matsu037@gmail.com">メールでお問い合わせ</a></td></tr>
                 <tr><td>公開URL</td><td>https://mimatsu037.github.io/substack_note/</td></tr>
             </table>
         </section>
@@ -233,7 +258,20 @@
     </main>
 
     <footer>
-        <a class="back" href="index.html">← ページトップへ戻る</a>
+        <nav class="footer-nav">
+            <a href="index.html">トップページ</a>
+            <span class="sep">｜</span>
+            <details>
+                <summary>運営者情報</summary>
+                <div class="popover">
+                    <p><strong>運営者：</strong>みな</p>
+                    <p><strong>お問い合わせ：</strong><a href="mailto:job.matsu037@gmail.com">メールでお問い合わせ</a></p>
+                    <p><strong>プライバシーポリシー：</strong><a href="privacy.html">こちら</a></p>
+                </div>
+            </details>
+            <span class="sep">｜</span>
+            <a href="privacy.html">プライバシーポリシー</a>
+        </nav>
         <p>&copy; 2026 みな（@mina_ai_fukugyo）. All Rights Reserved.</p>
     </footer>
 

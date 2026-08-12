@@ -124,6 +124,8 @@ Check your Browserslist config to be sure that your targets are set up correctly
         }
         .animate-float { animation: float 4s ease-in-out infinite; }
         @keyframes shimmer { 100% { transform: translateX(100%); } }
+        .footer-info summary { list-style: none; cursor: pointer; }
+        .footer-info summary::-webkit-details-marker { display: none; }
     </style>
     <script>
         tailwind.config = {
@@ -147,7 +149,7 @@ Check your Browserslist config to be sure that your targets are set up correctly
         プロンプトをコピーしました！
     </div>
 
-    <div class="max-w-2xl mx-auto bg-white shadow-xl overflow-hidden min-h-screen">
+    <div id="top" class="max-w-2xl mx-auto bg-white shadow-xl overflow-hidden min-h-screen">
 
         <header class="relative bg-gradient-to-br from-red-50 to-orange-50 pt-10 pb-16 px-6 text-center rounded-b-[2rem] overflow-hidden">
             <div class="absolute top-4 right-5 text-3xl animate-float">📚</div>
@@ -730,22 +732,29 @@ Check your Browserslist config to be sure that your targets are set up correctly
                 <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
                 <span class="text-sm font-medium">Instagram: @mina_ai_fukugyo</span>
             </a>
-            <p class="text-xs text-gray-500 mb-1">みな ｜ AI×SNSで在宅収入を叶える主婦</p>
+            <p class="text-xs text-gray-500 mb-4">みな ｜ AI×SNSで在宅収入を叶える主婦</p>
 
-            <div class="max-w-md mx-auto mt-8 bg-gray-50 rounded-2xl border border-gray-100 p-6 text-left">
-                <h4 class="text-sm font-bold text-gray-800 mb-3 text-center">運営者情報</h4>
-                <ul class="space-y-1.5 text-xs text-gray-600 leading-relaxed">
-                    <li><span class="font-bold text-gray-700">運営者：</span>みな</li>
-                    <li><span class="font-bold text-gray-700">お問い合わせ：</span>job.matsu037@gmail.com</li>
-                    <li><span class="font-bold text-gray-700">プライバシーポリシー：</span><a href="privacy.html" class="text-primary underline hover:no-underline">こちら</a></li>
-                </ul>
-                <p class="text-[11px] text-gray-500 leading-relaxed mt-4 pt-4 border-t border-gray-200">
-                    本ページの内容は手順の解説であり、収益を保証するものではありません。成果は個人の状況により異なります。<br><br>
-                    外部サービス（Substack、ChatGPT、公式LINEなど）の条件・規約・料率は変更される場合があるため、利用前に各サービスの公式情報をご確認ください。
-                </p>
-            </div>
+            <p class="text-[11px] text-gray-500 leading-relaxed max-w-md mx-auto mb-5">
+                本ページの内容は手順の解説であり、収益を保証するものではありません。成果は個人の状況により異なります。<br><br>
+                外部サービス（Substack、ChatGPT、公式LINEなど）の条件・規約・料率は変更される場合があるため、利用前に各サービスの公式情報をご確認ください。
+            </p>
 
-            <p class="text-xs text-gray-400 mt-6">&copy; 2026 みな（@mina_ai_fukugyo）. All Rights Reserved.</p>
+            <nav class="flex items-center justify-center gap-3 text-xs text-gray-500 mb-5">
+                <a href="#top" class="hover:text-primary transition-colors">トップページ</a>
+                <span class="text-gray-300">｜</span>
+                <details class="footer-info relative inline-block text-left">
+                    <summary class="hover:text-primary transition-colors">運営者情報</summary>
+                    <div class="absolute z-20 left-1/2 -translate-x-1/2 mt-3 w-64 bg-white border border-gray-100 rounded-2xl shadow-lg p-4 text-left text-xs text-gray-600 leading-relaxed">
+                        <p class="mb-1.5"><span class="font-bold text-gray-700">運営者：</span>みな</p>
+                        <p class="mb-1.5"><span class="font-bold text-gray-700">お問い合わせ：</span><a href="mailto:job.matsu037@gmail.com" class="text-primary underline hover:no-underline">メールでお問い合わせ</a></p>
+                        <p><span class="font-bold text-gray-700">プライバシーポリシー：</span><a href="privacy.html" class="text-primary underline hover:no-underline">こちら</a></p>
+                    </div>
+                </details>
+                <span class="text-gray-300">｜</span>
+                <a href="privacy.html" class="hover:text-primary transition-colors">プライバシーポリシー</a>
+            </nav>
+
+            <p class="text-xs text-gray-400">&copy; 2026 みな（@mina_ai_fukugyo）. All Rights Reserved.</p>
         </footer>
 
     </div>
